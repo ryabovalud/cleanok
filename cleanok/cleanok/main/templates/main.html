@@ -1,0 +1,23 @@
+<h2>{{ short_info.text_about }}</h2>
+
+<br />
+
+{% for item in info_item %}
+
+<b>{{ item.info_name }}</b> - {{ item.info_description }}<br />
+
+{% endfor %}
+
+<br />
+
+<h1>НАШЫ УСЛУГИ</h1>
+
+{% for item in service %}
+
+<h2>{{ item.name }}</h2>
+
+<h4>{{ item.short_desc }}</h4>
+
+{{ item.description }}
+
+{% endfor %}
