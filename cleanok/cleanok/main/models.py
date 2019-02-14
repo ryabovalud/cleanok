@@ -32,9 +32,9 @@ class ServiceWorksNames(models.Model):
 class WhyWe(models.Model):
 
 	name = models.CharField(max_length=30)
-	#image_for_name =
+	image_for_name = models.ImageField(upload_to="uploads/images/")
 	description = models.TextField()
-	#image_for_description = 
+	image_for_description = models.ImageField(upload_to="uploads/images/")
 
 # Блок "Как мы работаем"
 
@@ -49,5 +49,5 @@ class OrderRequest(models.Model):
 class Reviews(models.Model):
 
 	name = models.CharField(max_length=35)
-	#reviewer_photo = 
+	reviewer_photo = models.ImageField(upload_to="uploads/images/")
 	review_text = models.TextField()
