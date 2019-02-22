@@ -18,7 +18,7 @@ def index(request):
 
 	print(combined_worknames)
 
-	return render(request, 'main.html', {'short_info': qs_short_info, 'info_item': qs_info_item, 
+	return render(request, 'main/main.html', {'short_info': qs_short_info, 'info_item': qs_info_item, 
 										  'service': qs_service, 'combined': combined_worknames
 										})
 

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin import AdminSite
 from main.models import *
 
 # Register your models here.
@@ -12,3 +13,4 @@ admin.site.register(SpecialServiceWorksNames)
 admin.site.register(WhyWe)
 admin.site.register(OrderRequest)
 admin.site.register(Reviews)
+
