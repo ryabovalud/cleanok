@@ -1,5 +1,7 @@
 from django.db import models
 
+
+
 # Create your models here.
 
 # Блок "О нашей компании"
@@ -110,3 +112,4 @@ class Reviews(models.Model):
 
 		verbose_name = 'Отзыв'
 		verbose_name_plural = 'Отзывы'
+
