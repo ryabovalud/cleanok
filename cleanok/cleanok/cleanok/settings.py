@@ -32,14 +32,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main',
-    'flatpage_main',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.flatpages',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
 ]
 
@@ -51,7 +48,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'cleanok.urls'

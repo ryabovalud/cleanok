@@ -6,7 +6,10 @@ from django.db import models
 
 class ShortInfoAboutCompany(models.Model):
 
-	text_about = models.TextField()
+	text_about = models.TextField('Описание')
+
+	def __str__(self):
+		return "Описание"
 
 	class Meta:
 
@@ -15,8 +18,14 @@ class ShortInfoAboutCompany(models.Model):
 
 class InfoItem(models.Model):
 
-	info_name = models.CharField(max_length=20, unique=True)
-	info_description = models.TextField()
+	info_name = models.CharField('Достоинство', 
+								max_length=20,  
+								unique=True
+								)
+	info_description = models.TextField('Описание')
+
+	def __str__(self):
+		return "Пункт: " + self.info_name
 
 	class Meta:
 
@@ -27,9 +36,15 @@ class InfoItem(models.Model):
 
 class Service(models.Model):
 
-	name = models.CharField(max_length=30, unique=True)
-	short_desc = models.TextField()
-	description = models.TextField()
+	name = models.CharField('Наименование', 
+							max_length=30,  
+							unique=True
+							)
+	short_desc = models.TextField('Краткое описание')
+	description = models.TextField('Описание')
+
+	def __str__(self):
+		return "Услуга: " + self.name
 
 	class Meta:
 
@@ -38,9 +53,17 @@ class Service(models.Model):
 
 class ServiceWorksNames(models.Model):
 
-	service_name = models.ForeignKey(Service, to_field='name', on_delete=models.CASCADE)
-	work_title = models.CharField(max_length=50)
-	min_price = models.SmallIntegerField()
+	service_name = models.ForeignKey(Service, 
+									to_field='name', 
+									on_delete=models.CASCADE
+									)
+	work_title = models.CharField('Наименование работы', 
+								max_length=50, 
+								)
+	min_price = models.SmallIntegerField('Минимальная цена')
+
+	def __str__(self):
+		return f"{self.service_name.name}: {self.work_title}"
 
 	class Meta:
 
@@ -49,9 +72,15 @@ class ServiceWorksNames(models.Model):
 
 class SpecialService(models.Model):
 
-	name = models.CharField(max_length=40, unique=True)
-	short_desc = models.TextField()
-	description = models.TextField()
+	name = models.CharField('Наименование', 
+							max_length=40, 
+							unique=True, 
+							)
+	short_desc = models.TextField('Краткое описание')
+	description = models.TextField('Описание')
+
+	def __str__(self):
+		return "Спец. услуга: " + self.name
 
 	class Meta:
 
@@ -60,11 +89,19 @@ class SpecialService(models.Model):
 
 class SpecialServiceWorksNames(models.Model):
 
-	service_name = models.ForeignKey(SpecialService, to_field='name', on_delete=models.CASCADE)
-	work_title = models.CharField(max_length=50)
-	min_price = models.SmallIntegerField()
-	count = models.SmallIntegerField()
-	units = models.CharField(max_length=10)
+	service_name = models.ForeignKey(SpecialService, 
+									to_field='name', 
+									on_delete=models.CASCADE
+									)
+	work_title = models.CharField('Наименование работы', 
+									max_length=50, 
+									)
+	min_price = models.SmallIntegerField('Минимальная цена')
+	count = models.SmallIntegerField('Количество')
+	units = models.CharField('Ед. измерения', max_length=10)
+
+	def __str__(self):
+		return f"{self.service_name.name}: {self.work_title}"
 
 	class Meta:
 
@@ -75,10 +112,13 @@ class SpecialServiceWorksNames(models.Model):
 
 class WhyWe(models.Model):
 
-	name = models.CharField(max_length=30)
-	#image_for_name = models.ImageField(upload_to="uploads/images/")
-	description = models.TextField()
-	#image_for_description = models.ImageField(upload_to="uploads/images/")
+	name = models.CharField('Название элемента', max_length=30)
+	#image_for_name = models.ImageField(upload_to="media/images/")
+	description = models.TextField('Описание элемента')
+	#image_for_description = models.ImageField(upload_to="media/images/")
+
+	def __str__(self):
+		return f"Пункт: {self.name}"
 
 	class Meta:
 
@@ -89,9 +129,13 @@ class WhyWe(models.Model):
 
 class OrderRequest(models.Model):
 
-	name = models.CharField(max_length=20)
-	phone = models.CharField(max_length=20)
-	email = models.CharField(max_length=20)
+	name = models.CharField('Имя', max_length=20)
+	phone = models.CharField('Номер телефона', max_length=20)
+	email = models.CharField('Эл. почта', max_length=20)
+	date = models.DateField('Дата заказа', auto_now_add=True)
+
+	def __str__(self):
+		return f"Заказ: {self.name} ({self.date})"
 
 	class Meta:
 
@@ -102,9 +146,14 @@ class OrderRequest(models.Model):
 
 class Reviews(models.Model):
 
-	name = models.CharField(max_length=35)
-	#reviewer_photo = models.ImageField(upload_to="uploads/images/")
-	review_text = models.TextField()
+	first_name = models.CharField('Имя', max_length=20)
+	last_name = models.CharField('Фамилия', max_length=20)
+	#reviewer_photo = models.ImageField(upload_to="media/images/review")
+	review_text = models.TextField('Отзыв')
+	date = models.DateField('Дата написания', auto_now_add=True)
+
+	def __str__(self):
+		return f"Отзыв: {self.first_name} {self.last_name} ({self.date})"
 
 	class Meta:
 

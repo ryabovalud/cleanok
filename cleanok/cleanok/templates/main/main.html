@@ -24,13 +24,14 @@
 
 {% endfor %}<br />
 
+<form action="/order/" method="post">
+    {% csrf_token %}
+    {{ order_form.as_p }}
+    <input type="submit" value="Submit">
+</form>
 
-<table>
-	<tr>
-		<th>Наименование работ</th><th>Стоимость</th>
-	</tr>
-	{% for key,value in combined.items %}
-	
-	{% endfor %}
-</table>
-
+<form action="/review/" method="post">
+    {% csrf_token %}
+    {{ review_form.as_p }}
+    <input type="submit" value="Submit">
+</form>
