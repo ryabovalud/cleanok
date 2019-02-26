@@ -1,37 +1,75 @@
-<center><h2>О НАШЕЙ КОМПАНИИ</h2></center>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>title</title>
+  <meta charset="utf-8">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'main/main.css' %}">
+    
+</head>
+  <body>
+    <!-- Блок "О нас" -->
+    <div id="block-about">
+      <h2 id="title-about">О нашей компании</h2>
+      <h3 id="text-about">{{ short_info.text_about }}</h3>
+    </div>
+    <div id="merits-block">
+      {% for item in info_item %}
+        <p class="item-merit"><b>{{ item.info_name }}</b> - {{ item.info_description }}</p>
+      {% endfor %}
+    </div>
+    
+    <!-- Блок "Услуги" -->
+    <div id="service">
+      <h2 id="service-title">Наши услуги</h2>
+      <div>
+        {% for item in service %}
+        <h3 class="service-name">{{ item.name }}</h3>
+        <p class="service-short-desc">{{ item.short_desc }}</p>
+          <div id="service-about">
+            <h4>Описание</h4>
+            <p class="service-desc">{{ item.description }}</p>
+          </div>
+          {% endfor %}
+      </div>     
+    </div>
 
-<center><h3>{{ short_info.text_about }}</h3></center>
+    <!-- Блок "Спец. услуги" -->
+    <div id="special-service">
+      <h2 id="special-service-title">Наши спец. услуги</h2>
+      <div>
+        {% for item in service %}
+        <h3 class="special-service-name">{{ item.name }}</h3>
+        <p class="special-service-short-desc">{{ item.short_desc }}</p>
+          <div id="special-service-about">
+            <h4>Описание</h4>
+            <p class="special-service-desc">{{ item.description }}</p>
+          </div>
+          {% endfor %}
+      </div>     
+    </div>
 
-<br />
+    <!-- Блок "Почему мы" -->
+    <div id="why-us">
+        <h3>Почему мы?</h3>
+        {% for item in whywe %}
+          <p clas="why-us-item">{{ item.name }} - {{ item.description }}</p>
+        {% endfor %}
+    </div>
 
-{% for item in info_item %}
+    <!-- Блок "Как мы работаем" -->
 
-	<b>{{ item.info_name }}</b> - {{ item.info_description }}<br />
+    <form action="/" method="post">
+      {% csrf_token %}
+      {{ order_form.as_p }}
+      <input type="submit" value="Submit" name="order_form">
+    </form>
 
-{% endfor %}
-
-<br />
-
-<h1>НАШИ УСЛУГИ</h1>
-
-{% for item in service %}
-
-	<h2>{{ item.name }}</h2>
-
-	<h4>{{ item.short_desc }}</h4>
-
-	{{ item.description }}
-
-{% endfor %}<br />
-
-<form action="/order/" method="post">
-    {% csrf_token %}
-    {{ order_form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-
-<form action="/review/" method="post">
-    {% csrf_token %}
-    {{ review_form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+    <!--Блок "Отзывы"-->
+    <div id="reviews">
+      {% for item in reviews %}
+        <h4>{{ item.first_name }} {{ item.last_name }}</h4>
+        <p>{{ item.review_text }}</p>
+      {% endfor %}
+    </div>
+  </body>

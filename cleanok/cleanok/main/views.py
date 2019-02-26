@@ -13,7 +13,7 @@ class MainView(View):
 	def get(self, request):
 
 		#QuerySet'ы объектов
-		qs_short_info = ShortInfoAboutCompany.objects.get(pk=1)
+		qs_short_info = ShortInfoAboutCompany.objects.first()
 		qs_info_item = InfoItem.objects.all()
 		qs_service = Service.objects.all()
 		qs_worksnames = ServiceWorksNames.objects.all()
@@ -22,79 +22,35 @@ class MainView(View):
 		qs_whywe = WhyWe.objects.all()
 		qs_reviews = Reviews.objects.all()
 
-		#Формы заказов и отзывов
+		#Форма запроса на заказ
 		order_form = OrderRequestForm()
-		review_form = ReviewForm()
 
-		return render(request, 'main/main.html', {'short_info': qs_short_info, 
-												'info_item': qs_info_item, 
-										  		'service': qs_service,
-										  		'worknames': qs_worksnames,
-										  		'special_service': qs_special_service,
-										  		'special_worknames': qs_special_worknames,
-										  		'whywe': qs_whywe,
-										  		'reviews': qs_reviews,
-										  		'order_form': order_form,
-										  		'review_form': review_form
-												})
+		context = {'short_info': qs_short_info, 'info_item': qs_info_item, 
+					'service': qs_service, 'worknames': qs_worksnames,
+					'special_service': qs_special_service,
+					'special_worknames': qs_special_worknames,
+					'whywe': qs_whywe, 'reviews': qs_reviews, 
+					'order_form': order_form
+					}
 
-	"""def post(self, request):
-					
-					form1 = OrderRequestForm(request.POST)
-					form2 = ReviewForm(request.POST)
-			
-					if OrderRequestForm(request.POST).is_valid():
-						data = OrderRequestForm(request.POST).cleaned_data
-						print(data)
-					elif ReviewForm(request.POST).is_valid():
-						data = ReviewForm(request.POST).cleaned_data
-						print(data)
-					else:
-						print('error хуле')
-					return HttpResponseRedirect('/')"""
+		return render(request, 'main/main.html', context)
 
+	def post(self, request):
 
-class ReviewView(FormView):
-	template_name = 'main/main.html'
-	form_class = ReviewForm
-	success_url = '/review/'
+		# Определяем, с какой формы пришёл запрос
+		form_name = list(request.POST)[-1]
 
-	def form_valid(self, form):
-		print(form.cleaned_data)
-		return HttpResponse('Review form success')
+		# Обработка формы заказа
+		if form_name == 'order_form':
+			form = OrderRequestForm(request.POST)
+			if form.is_valid():
+				new = OrderRequest(**form.cleaned_data)
+				new.save()
+		# Обработка формы отзыва
+		else:
+			form = ReviewForm(request.POST)
+			if form.is_valid():
+				new = Reviews(**form.cleaned_data)
+				new.save()
 
-class OrderView(FormView):
-	template_name = 'main/main.html'
-	form_class = OrderRequestForm
-	success_url = '/order/'
-
-	def form_valid(self, form):
-		print(form.cleaned_data)
-		return HttpResponse('Order form success')
-
-
-
-"""def index(request):
-
-	qs_short_info = ShortInfoAboutCompany.objects.get(pk=1)
-
-	qs_info_item = InfoItem.objects.all()
-
-	qs_service = Service.objects.all()
-
-	qs_worksnames = ServiceWorksNames.objects.all()
-	#print(ShortInfoAboutCompany.objects.values().get(pk=2))
-	combined_worknames = combine_items(qs_worksnames)
-
-	return render(request, 'main/main.html', {'short_info': qs_short_info, 'info_item': qs_info_item, 
-										  'service': qs_service, 'combined': combined_worknames,
-										})
-
-def combine_items(q_set):
-
-	combined = defaultdict(list)
-
-	for item in q_set:
-		combined[item.min_price].append(item.work_title)
-
-	return combined"""
+		return HttpResponse('<p>Good</p>')

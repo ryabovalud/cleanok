@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin import AdminSite
 from main.models import *
 
 # Register your models here.

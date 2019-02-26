@@ -1,10 +1,12 @@
 from django.db import models
+from django.core.validators import ValidationError
 
 # Create your models here.
 
 # Блок "О нашей компании"
 
 class ShortInfoAboutCompany(models.Model):
+	# Информация о компании
 
 	text_about = models.TextField('Описание')
 
@@ -17,6 +19,7 @@ class ShortInfoAboutCompany(models.Model):
 		verbose_name_plural = 'Краткая информация о компании'
 
 class InfoItem(models.Model):
+	# Пункты списка достоинств
 
 	info_name = models.CharField('Достоинство', 
 								max_length=20,  
@@ -35,9 +38,10 @@ class InfoItem(models.Model):
 # Блок "Услуги"
 
 class Service(models.Model):
+	# Основная модель услуг
 
 	name = models.CharField('Наименование', 
-							max_length=30,  
+							max_length=60,  
 							unique=True
 							)
 	short_desc = models.TextField('Краткое описание')
@@ -52,6 +56,7 @@ class Service(models.Model):
 		verbose_name_plural = 'Услуги'
 
 class ServiceWorksNames(models.Model):
+	# Наименования работ для конкретной услуги
 
 	service_name = models.ForeignKey(Service, 
 									to_field='name', 
@@ -71,9 +76,10 @@ class ServiceWorksNames(models.Model):
 		verbose_name_plural = 'Наименование работ'
 
 class SpecialService(models.Model):
+	# Основная модель спец. услуг
 
 	name = models.CharField('Наименование', 
-							max_length=40, 
+							max_length=60, 
 							unique=True, 
 							)
 	short_desc = models.TextField('Краткое описание')
@@ -88,6 +94,7 @@ class SpecialService(models.Model):
 		verbose_name_plural = 'Спец. Услуги'
 
 class SpecialServiceWorksNames(models.Model):
+	# Наименования работ для конкретной спец. услуги
 
 	service_name = models.ForeignKey(SpecialService, 
 									to_field='name', 
@@ -111,6 +118,7 @@ class SpecialServiceWorksNames(models.Model):
 # Блок "Почему мы"
 
 class WhyWe(models.Model):
+	# Модель элемента для блока "Почему мы"
 
 	name = models.CharField('Название элемента', max_length=30)
 	#image_for_name = models.ImageField(upload_to="media/images/")
@@ -128,6 +136,7 @@ class WhyWe(models.Model):
 # Блок "Как мы работаем"
 
 class OrderRequest(models.Model):
+	# Модель запроса на заказ
 
 	name = models.CharField('Имя', max_length=20)
 	phone = models.CharField('Номер телефона', max_length=20)
@@ -145,6 +154,7 @@ class OrderRequest(models.Model):
 # Блок "Отзывы"
 
 class Reviews(models.Model):
+	# Модель отзыва
 
 	first_name = models.CharField('Имя', max_length=20)
 	last_name = models.CharField('Фамилия', max_length=20)
