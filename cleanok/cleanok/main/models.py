@@ -59,7 +59,7 @@ class ServiceWorksNames(models.Model):
 	# Наименования работ для конкретной услуги
 
 	service_name = models.ForeignKey(Service, 
-									to_field='name', 
+									#to_field='name', 
 									on_delete=models.CASCADE
 									)
 	work_title = models.CharField('Наименование работы', 
@@ -96,16 +96,51 @@ class SpecialService(models.Model):
 class SpecialServiceWorksNames(models.Model):
 	# Наименования работ для конкретной спец. услуги
 
+	PRICE_TYPE = "Цена, колич-во и ед. измерения"
+	TEXT_TYPE = "Текст"
+
+	INPUT_CHOISES = (
+					(PRICE_TYPE, "Цена, колич-во и ед. измерения"),
+					(TEXT_TYPE, "Текст")
+					)
+
 	service_name = models.ForeignKey(SpecialService, 
-									to_field='name', 
 									on_delete=models.CASCADE
 									)
 	work_title = models.CharField('Наименование работы', 
-									max_length=50, 
+									max_length=50,
+
 									)
-	min_price = models.SmallIntegerField('Минимальная цена')
-	count = models.SmallIntegerField('Количество')
-	units = models.CharField('Ед. измерения', max_length=10)
+
+	input_choice = models.CharField('Тип ячейки', max_length=30, 
+									choices=INPUT_CHOISES, default=PRICE_TYPE
+									)
+	min_price = models.SmallIntegerField('Минимальная цена',
+										blank=True,
+										null=True
+										)
+	count = models.SmallIntegerField('Количество', blank=True, null=True)
+	units = models.CharField('Ед. измерения', 
+							max_length=10, 
+							blank=True,
+							null=True
+							)
+	alternate_text = models.TextField('Альтернативный текст', blank=True, null=True)
+
+	def save(self, *args, **kwargs):
+		# Разделение на тип ячейки
+
+		if self.input_choice == self.PRICE_TYPE:
+			if self.alternate_text:
+				raise ValidationError('Альтернативный текст должен быть пустым')
+			elif not self.min_price or not self.count or not self.units:
+				raise ValidationError('Есть незаполненные поля')
+					
+		else:
+			if self.min_price or self.count or self.units:
+				raise ValidationError('Должен присутсвовать только альтернативный текст')
+					
+		super().save(*args, **kwargs)
 
 	def __str__(self):
 		return f"{self.service_name.name}: {self.work_title}"

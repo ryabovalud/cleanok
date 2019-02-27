@@ -15,28 +15,30 @@ class MainView(View):
 		#QuerySet'ы объектов
 		qs_short_info = ShortInfoAboutCompany.objects.first()
 		qs_info_item = InfoItem.objects.all()
-		qs_service = Service.objects.all()
+		qs_services = Service.objects.all()
 		qs_worksnames = ServiceWorksNames.objects.all()
-		qs_special_service = SpecialService.objects.all()
+		qs_special_services = SpecialService.objects.all()
 		qs_special_worknames = SpecialServiceWorksNames.objects.all()
 		qs_whywe = WhyWe.objects.all()
 		qs_reviews = Reviews.objects.all()
 
 		#Форма запроса на заказ
 		order_form = OrderRequestForm()
+		review_form = ReviewForm()
 
 		context = {'short_info': qs_short_info, 'info_item': qs_info_item, 
-					'service': qs_service, 'worknames': qs_worksnames,
-					'special_service': qs_special_service,
-					'special_worknames': qs_special_worknames,
+					'services': qs_services, 'worksnames': qs_worksnames,
+					'special_services': qs_special_services,
+					'special_worksnames': qs_special_worknames,
 					'whywe': qs_whywe, 'reviews': qs_reviews, 
-					'order_form': order_form
+					'order_form': order_form, 'review_form': review_form
 					}
 
 		return render(request, 'main/main.html', context)
 
 	def post(self, request):
 
+		print('review_form' in request.POST)
 		# Определяем, с какой формы пришёл запрос
 		form_name = list(request.POST)[-1]
 
