@@ -13,3 +13,4 @@ class ReviewForm(forms.Form):
 	first_name = forms.CharField(max_length=30, label='Имя')
 	last_name = forms.CharField(max_length=30, label='Фамилия')
 	review_text = forms.CharField(widget=forms.Textarea, min_length=70 , label='Отзыв')
+

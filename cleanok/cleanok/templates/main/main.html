@@ -143,6 +143,13 @@
       </form>
     </div>
 
+    <h3>Сделать заказ</h3>
+    <form action="/" method="post">
+      {% csrf_token %}
+      {{ order_form.as_p }}
+      <input type="submit" value="Submit" name="order_form">
+    </form>
+
     <!-- Блок "Отзывы" -->
     <div id="reviews" class="section">
       <h3>Отзывы</h3>
@@ -162,4 +169,13 @@
         <input type="submit" value="Submit" name="review_form">
       </form>
     </div>
+  </body>
+
+    <!--Блок "Оставить отзыв"-->
+    <h3>Оставить отзыв</h3>
+    <form action="/" method="post">
+      {% csrf_token %}
+      {{ review_form.as_p }}
+      <input type="submit" value="Submit" name="review_form">
+    </form>
   </body>
