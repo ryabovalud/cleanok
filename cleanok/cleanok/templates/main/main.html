@@ -20,14 +20,8 @@
     }
 
     .service-separator{
-      /*margin-right: 50%;
-      padding: 1%;*/
+      padding: 1%;
     }
-
-    /*.worksnames-table{
-      border: 3px solid black;
-      text-align: center;
-    }*/
 
     table {
       font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -77,19 +71,19 @@
             <h4>Описание</h4>
             <p class="service-desc">{{ service.description }}</p>
           </div>
-      <table class="worksnames-table">
-        <tr>
-          <th>Наименование работ</th><th>Стоимость</th>
-        </tr>
-        {% for item in worksnames %}
-        <tr>
-          {% if item.service_name.name == service.name %}
-            <td>{{ item.work_title }}</td>
-            <td>От {{ item.min_price }} руб.</td>
-          {% endif %}
-        </tr>
-        {% endfor %}
-      </table>
+          <table class="worksnames-table">
+            <tr>
+              <th>Наименование работ</th><th>Стоимость</th>
+            </tr>
+            {% for item in worksnames %}
+            <tr>
+              {% if item.service_name.name == service.name %}
+                <td>{{ item.work_title }}</td>
+                <td>От {{ item.min_price }} руб.</td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </table>
       </div>
       {% endfor %}
     </div>
@@ -128,7 +122,7 @@
     <div id="why-us" class="section">
         <h3>Почему мы?</h3>
         {% for item in whywe %}
-          <p class="separator">{{ item.name }} - {{ item.description }}</p>
+          <p class="separator" style="display: block;">{{ item.name }} - {{ item.description }}</p>
         {% endfor %}
     </div>
 

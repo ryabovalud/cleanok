@@ -41,21 +41,17 @@ class MainView(View):
 
 	def post(self, request):
 
-		print('review_form' in request.POST)
-		# Определяем, с какой формы пришёл запрос
-		form_name = list(request.POST)[-1]
-
 		# Обработка формы заказа
-		if form_name == 'order_form':
+		if 'order_form' in request.POST:
 			form = OrderRequestForm(request.POST)
 			if form.is_valid():
 				new = OrderRequest(**form.cleaned_data)
 				new.save()
 		# Обработка формы отзыва
-		else:
+		elif 'review_form' in request.POST:
 			form = ReviewForm(request.POST)
 			if form.is_valid():
 				new = Reviews(**form.cleaned_data)
 				new.save()
 
-		return HttpResponse('<p>Good</p>')
+		return HttpResponseRedirect('/')

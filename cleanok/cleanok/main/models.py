@@ -156,9 +156,9 @@ class WhyWe(models.Model):
 	# Модель элемента для блока "Почему мы"
 
 	name = models.CharField('Название элемента', max_length=30)
-	#image_for_name = models.ImageField(upload_to="media/images/")
+	image_for_name = models.ImageField('Фон для названия', upload_to="images/whywe/name")
 	description = models.TextField('Описание элемента')
-	#image_for_description = models.ImageField(upload_to="media/images/")
+	image_for_description = models.ImageField('Фон для описания', upload_to="images/whywe/description")
 
 	def __str__(self):
 		return f"Пункт: {self.name}"
@@ -193,7 +193,7 @@ class Reviews(models.Model):
 
 	first_name = models.CharField('Имя', max_length=20)
 	last_name = models.CharField('Фамилия', max_length=20)
-	#reviewer_photo = models.ImageField(upload_to="media/images/review")
+	reviewer_photo = models.ImageField('Фото', upload_to="images/review")
 	review_text = models.TextField('Отзыв')
 	date = models.DateField('Дата написания', auto_now_add=True)
 
