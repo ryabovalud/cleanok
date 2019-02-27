@@ -25,12 +25,15 @@ class MainView(View):
 		#Форма запроса на заказ
 		order_form = OrderRequestForm()
 
+                #Форма оставления отзыва
+		review_form = ReviewForm()
+
 		context = {'short_info': qs_short_info, 'info_item': qs_info_item, 
 					'service': qs_service, 'worknames': qs_worksnames,
 					'special_service': qs_special_service,
 					'special_worknames': qs_special_worknames,
 					'whywe': qs_whywe, 'reviews': qs_reviews, 
-					'order_form': order_form
+					'order_form': order_form, 'review_form': review_form,
 					}
 
 		return render(request, 'main/main.html', context)
