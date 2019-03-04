@@ -45,6 +45,10 @@
     th:first-child, td:first-child {
       text-align: left;
     }
+
+    .form-message{
+      color: green;
+    }
   </style>
     
 </head>
@@ -133,6 +137,13 @@
       <form action="/" method="post">
         {% csrf_token %}
         {{ order_form.as_p }}
+        {% if messages %}
+          {% for message in messages %}
+            {% if message.extra_tags == 'order' %} 
+              <p class="form-message">{{ message }}</p>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
         <input type="submit" value="Submit" name="order_form">
       </form>
     </div>
@@ -153,6 +164,13 @@
       <form action="/" method="post">
         {% csrf_token %}
         {{ review_form.as_p }}
+        {% if messages %}
+          {% for message in messages %}
+            {% if message.extra_tags == 'review' %} 
+              <p class="form-message">{{ message }}</p>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
         <input type="submit" value="Submit" name="review_form">
       </form>
     </div>
